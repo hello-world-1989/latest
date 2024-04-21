@@ -1,6 +1,8 @@
 name: Upload release asset
 
 on:
+  push:
+    branches: ['main']
   schedule:
     - cron: '45 22 * * *'
 
