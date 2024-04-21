@@ -9,6 +9,11 @@ async function main() {
     const browser = await puppeteer.launch({ timeout: 60_000 });
     const page = await browser.newPage();
 
+    await page.setExtraHTTPHeaders({
+      'Accept-Language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;', // You can set your preferred languages here
+    });
+
+
     try {
       await page.goto(`https://end-gfw.com/tweet-page-7`);
 
@@ -16,7 +21,7 @@ async function main() {
       await page.waitForSelector(searchResultSelector);
 
       await page.pdf({
-        path: 'last.pdf',
+        path: 'last7days.pdf',
         width: 1440,
         height: 1200,
       });

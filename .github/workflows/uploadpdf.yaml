@@ -1,6 +1,8 @@
 name: Upload release asset
 
 on:
+  push:
+    branches: ['main']
   schedule:
     - cron: '45 22 * * *'
 
@@ -15,10 +17,19 @@ jobs:
         with:
           node-version: 18.x
           cache: 'yarn'
+
+      - name: Set locale to Chinese (Simplified)
+        run: export LANG=zh_CN.UTF-8
+
+      - name: Install Chinese fonts
+        run: sudo apt-get update && sudo apt-get install -y fonts-noto-cjk
+      
       - run: yarn install
       - run: |
           yarn ts-node genPDF7.ts
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: last.pdf
+          files: last7days.pdf
+          tag_name: latest
+          append_body: false
